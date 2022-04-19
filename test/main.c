@@ -1,4 +1,5 @@
 #include "../main.h"
+#include <stdio.h>
 /** 
  * main - funct to test code 
  *
@@ -6,8 +7,8 @@
  */
 int main(void)
 {
-	_printf("Hello world\n");
-	printf("Hello world\n");
+	_printf("Hello %c world\n", 'B');
+	printf("Hello %c world\n", 'B');
 
 	return (0);
 }
