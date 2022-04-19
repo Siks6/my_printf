@@ -7,8 +7,8 @@
  */
 int main(void)
 {
-	_printf("Hello %c world\n", 'B');
-	printf("Hello %c world\n", 'B');
+	_printf("My name is: %s\n", "Bonga");
+	printf("My name is: %s\n", "Bonga");
 
 	return (0);
 }
