@@ -22,8 +22,14 @@ int _printf(const char *format, ...)
 		else
 		{
 			/* i.e. when -> format[i] == % */
+	
 			if (format[i+1] == 'c')
+			{
 				_putchar(va_arg(args, int));
+				i++;
+
+			}
+			
 		
 		}
 
