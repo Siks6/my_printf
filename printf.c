@@ -4,7 +4,7 @@
  * _printf - produces function according to format
  * @format: string containing characters and specifiers
  *
- * Return: length of format string 
+ * Return: length of format string
  *
  */
 int _printf(const char *format, ...)
@@ -14,6 +14,8 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
+		/* Task 0: %c %s */
+
 	while (format[i] != '\0')
 	{
 		if (format[i] != '%')
@@ -21,16 +23,16 @@ int _printf(const char *format, ...)
 
 		else
 		{
-			/* i.e. when -> format[i] == % */
-	
-			if (format[i+1] == 'c')
+		/* i.e. when -> format[i] == % */
+
+			if (format[i + 1] == 'c')
 			{
 				_putchar(va_arg(args, int));
 				i++;
 
 			}
-			
-		
+
+
 		}
 
 		i++;
