@@ -14,7 +14,6 @@ int _printf(const char *format, ...)
 
 	va_start(args, format);
 
-		/* Task 0: %c %s */
 
 	while (format[i] != '\0')
 	{
@@ -23,7 +22,6 @@ int _printf(const char *format, ...)
 
 		else
 		{
-		/* i.e. when -> format[i] == % */
 
 			if (format[i + 1] == 'c')
 			{
