@@ -23,7 +23,7 @@ void print_string(char *s, int *count)
 		exit(1);
 	for (i = 0; i < len; i++)
 	{
-		newstr[i];
+		newstr[i] = s[i];
 	}
 	newstr[i] = '\0';
 	*count += write(1, newstr, len);
