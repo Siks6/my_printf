@@ -1,4 +1,6 @@
 #include "main.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <stdarg.h>
 #include <stddef.h>
 /**
@@ -10,48 +12,92 @@
  */
 int _printf(const char *format, ...)
 {
-	va_list args;
-	int i = 0, j = 0;
-	char *str = NULL;
+	va_list ap;
+	va_start(ap, format);
+	char buffer[100], strg[20];
+	int state = 0;
+	int i = 0, count = 0, num = 0;
 
-	va_start(args, format);
-
-	/* task 0: %, %s, %% */
-	while (format[i] != '\0')
+	while (format && format [i])
 	{
-		if (format[i] != '%')
-		_putchar(format[i]);
-
-		else /* format[i] = % */
+		if (state == 0)
 		{
-
-			if (format[i + 1] == 'c')
+			if (*format != '%' && *format != '\n')
 			{
-				_putchar(va_arg(args, int));
-				i++;
-
+				_putchar(*format);
+				count++;
 			}
-			else if (format[i + 1] == 's')
+			else if (*format == '\n')
 			{
-				i++;
-				str = va_arg(args, char *);
-				j = 0;
-
-				while (str[j] != '\0')
-				{
-					_putchar(str[j]);
-					j++;
-				
-				}
-			
+				_putchar('\n');
+				count++;
 			}
 
+			else
+			{
+				state = 1;
+			}
 		}
+		else if (state == 1)
+		{
+			switch (*format)
+			{
+			case 's':
+				{
+					char *str = va_arg(ap, char *);
+					while (*str)
+					{
+						_putchar(*str++);
+						count++;
+					}
+					break;
 
-		i++;
+				}
+			case 'c':
+				{
+					int ch = va_arg(ap, int);
+					_putchar(ch);
+					count++;
+					break;
+				}	
+			case 'd':
+				{
+					int ch = va_arg(ap, int);
+					char buff[100];
+					char *buff1 = my_itoa(num,strg);
+					while (*buff1)
+					{
+						count++;
+						_putchar(*buff1++);
+					}
+
+					break;
+				}
+			case 'i':
+				{
+					int ch = va_arg(ap, int);
+					char buff[100];
+					char *buff1 = my_itoa(num, strg);
+					while (*buff1)
+					{
+						count++;
+						_putchar(*buff1++);
+					}
+					break;
+				}
+			case '%':
+				{
+					_putchar('%');
+					count++;
+					break;
+				}
+			}
+		state = 0;
+		}
+	format++;
 	}
-	va_end(args);
+	va_end(ap);
 
-	return (0);
-
+	return (count);
 }
+
