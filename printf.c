@@ -1,103 +1,51 @@
 #include "main.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdarg.h>
-#include <stddef.h>
+
 /**
- * _printf - produces function according to format
- * @format: string containing characters and specifiers
+ * _printf - printf function
+ * @format: string format specifier to str
  *
- * Return: length of format string
+ * Return: count.
  *
- */
+ **/
 int _printf(const char *format, ...)
 {
-	va_list ap;
-	va_start(ap, format);
-	char buffer[100], strg[20];
-	int state = 0;
-	int i = 0, count = 0, num = 0;
+	char *s;
+	int i, traverse;
+	int count = 0;
+	va_list arg;
 
-	while (format && format [i])
+	va_start(arg, format);
+	count = 0;
+
+	if (!format || (format[0] == '%' && !format[1]))
+		return (-1);
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
+		return (-1);
+	for (traverse = 0; format[traverse]; traverse++)
 	{
-		if (state == 0)
+		while (format[traverse] != '&' && format[traverse])
 		{
-			if (*format != '%' && *format != '\n')
-			{
-				_putchar(*format);
-				count++;
-			}
-			else if (*format == '\n')
-			{
-				_putchar('\n');
-				count++;
-			}
-
-			else
-			{
-				state = 1;
-			}
+			count += _putchar(format[traverse]);
+			traverse++;
 		}
-		else if (state == 1)
+		if (!(format[traverse]) || (!format[traverse + 1]))
+			return (count);
+		traverse++;
+		switch (format[traverse])
 		{
-			switch (*format)
-			{
-			case 's':
-				{
-					char *str = va_arg(ap, char *);
-					while (*str)
-					{
-						_putchar(*str++);
-						count++;
-					}
-					break;
-
-				}
 			case 'c':
-				{
-					int ch = va_arg(ap, int);
-					_putchar(ch);
-					count++;
-					break;
-				}	
-			case 'd':
-				{
-					int ch = va_arg(ap, int);
-					char buff[100];
-					char *buff1 = my_itoa(num,strg);
-					while (*buff1)
-					{
-						count++;
-						_putchar(*buff1++);
-					}
-
-					break;
-				}
-			case 'i':
-				{
-					int ch = va_arg(ap, int);
-					char buff[100];
-					char *buff1 = my_itoa(num, strg);
-					while (*buff1)
-					{
-						count++;
-						_putchar(*buff1++);
-					}
-					break;
-				}
+				i = va_arg(arg, int);
+				count += _putchar(i);
+				break;
+			case 's':
+				s = va_arg(arg, char *);
+				print_string(s, &count);
+				break;
 			case '%':
-				{
-					_putchar('%');
-					count++;
-					break;
-				}
-			}
-		state = 0;
+				count += _putchar('%');
+				break;
 		}
-	format++;
 	}
-	va_end(ap);
-
+	va_end(arg);
 	return (count);
 }
-

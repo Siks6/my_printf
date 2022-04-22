@@ -10,5 +10,5 @@ int _putchar(char c);
 int _printf(const char *format, ...);
 int _puts(char *s);
 char *my_itoa(int num, char *strg);
-
+void print_string(char *s, int *count);
 #endif
